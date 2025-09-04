@@ -1,0 +1,18 @@
+import styled from "styled-components";
+import { Cores } from "../../styles/reset";
+
+type ButtonPropsCSS = {
+  tipoCSS?: "menu" | "perfil";
+};
+
+export const Buttons = styled.a<ButtonPropsCSS>`
+  display: block;
+  font-weight: 700;
+  font-size: 14px;
+  text-align: center;
+  width: ${(props) => (props.tipoCSS === "perfil" ? "100%" : "20%")};
+  padding: 8px;
+  border: none;
+  color: ${Cores.bege};
+  background-color: ${(props) => (props.tipoCSS === "perfil" ? Cores.bege : Cores.vermelho)};
+`;
