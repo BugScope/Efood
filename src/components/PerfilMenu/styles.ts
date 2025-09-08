@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import fundo from "../../assets/Images/fundo.svg";
+import { Cores } from "../../styles/reset";
 
 export const Header = styled.div`
   background-image: url(${fundo});
@@ -9,20 +10,17 @@ export const Header = styled.div`
 `;
 
 export const HeaderItens = styled.div`
-  display: block;
+  display: flex;
   text-align: center;
-  position: relative;
   padding-top: 40px;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
 
-  a {
-    position: absolute;
-    top: 50%;
-    left: 10%;
-  }
-
+  a,
   p {
-    position: absolute;
-    top: 60%;
-    right: 10%;
+    color: ${Cores.vermelho};
+    font-weight: 700;
   }
 `;

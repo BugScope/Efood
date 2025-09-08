@@ -1,22 +1,33 @@
 import * as S from "./styles";
 import estrela from "../../assets/Images/estrela.svg";
 import Button from "../Button";
+import Tag from "../Tag";
 
 type CardProps = {
   img: string;
   title: string;
   rating: number;
   description: string;
+  tagDescription: string;
+  destaque?: boolean;
 };
 
-const Card = ({ description, img, rating, title }: CardProps) => {
+const Card = ({ description, img, rating, title, tagDescription, destaque }: CardProps) => {
   return (
     <S.Card>
       <S.CardBannerImg>
         <img src={img} alt="" />
         <S.CardBannerInfo>
-          <span>primeiro</span>
-          <span>Segundo</span>
+          {destaque ? (
+            <>
+              <Tag>Destaque da Semana</Tag>
+              <Tag>{tagDescription}</Tag>
+            </>
+          ) : (
+            <>
+              <Tag>{tagDescription}</Tag>
+            </>
+          )}
         </S.CardBannerInfo>
       </S.CardBannerImg>
       <S.CardContainer>

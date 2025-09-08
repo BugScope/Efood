@@ -6,8 +6,10 @@ const PerfilCardList = () => {
   return (
     <div>
       <S.PerfilCardListImg>
-        <p className="pequeno">Italiana</p>
-        <p className="grande">La Dolce Vita Trattoria</p>
+        <div>
+          <p className="pequeno">Italiana</p>
+          <p className="grande">La Dolce Vita Trattoria</p>
+        </div>
       </S.PerfilCardListImg>
       <S.PerfilCardListContainer>
         <PerfilCard

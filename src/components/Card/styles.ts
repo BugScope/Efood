@@ -23,12 +23,13 @@ export const CardBannerImg = styled.div`
 
 export const CardBannerInfo = styled.p`
   position: absolute;
+  display: flex;
   top: 0%;
   right: 0%;
   margin: 16px;
 
-  span {
-    margin-right: 6px;
+  div {
+    margin-right: 8px;
   }
 `;
 

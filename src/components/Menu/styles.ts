@@ -16,6 +16,7 @@ export const Header = styled.div`
 
   h1 {
     margin: 138px 0 40px 0;
+    font-size: 36px;
     color: ${Cores.vermelho};
   }
 `;

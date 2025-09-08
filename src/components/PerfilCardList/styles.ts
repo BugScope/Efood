@@ -10,12 +10,18 @@ export const PerfilCardListImg = styled.div`
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-  display: flex;
-  justify-content: space-between;
-  flex-direction: column;
-  padding: 24px 0 24px 170px;
   font-size: 32px;
   color: ${Cores.branco};
+
+  div {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
+    padding: 26px 0;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
 
   .pequeno {
     font-weight: 100;

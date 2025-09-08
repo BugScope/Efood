@@ -6,15 +6,9 @@ const PerfilMenu = () => {
   return (
     <S.Header>
       <S.HeaderItens>
-        <div>
-          <a>
-            <Link to={"/"}>Restaurantes</Link>
-          </a>
-        </div>
+        <Link to={"/"}>Restaurantes</Link>
         <img src={logo} alt="" />
-        <div>
-          <p>0 produto(s) no carrinho</p>
-        </div>
+        <p>0 produto(s) no carrinho</p>
       </S.HeaderItens>
     </S.Header>
   );
