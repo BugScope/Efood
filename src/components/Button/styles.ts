@@ -15,7 +15,7 @@ export const Buttons = styled.a<ButtonPropsCSS>`
   background-color: ${(props) => (props.tipoCSS === "perfil" ? Cores.bege : Cores.vermelho)};
 
   a {
-    color: ${Cores.bege};
+    color: ${(props) => (props.tipoCSS === "perfil" ? Cores.vermelho : Cores.bege)};
     font-size: 14px;
   }
 `;
