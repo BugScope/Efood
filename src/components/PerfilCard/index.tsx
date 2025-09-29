@@ -6,6 +6,8 @@ export type CardProps = {
   title: string;
   rating?: number;
   description: string;
+  porcao?: string;
+  preco?: number;
   onSelecionar?: () => void;
 };
 

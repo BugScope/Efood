@@ -32,7 +32,12 @@ const PerfilCardList = ({ idRestaurante }: CardListprops) => {
     return desc;
   };
 
-  console.log(estaAberto);
+  function formatarPreco(valor) {
+    return valor.toLocaleString("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    });
+  }
 
   return (
     <div>
@@ -54,6 +59,8 @@ const PerfilCardList = ({ idRestaurante }: CardListprops) => {
                 title: car.nome,
                 description: car.descricao,
                 img: car.foto,
+                porcao: car.porcao,
+                preco: car.preco,
               });
               setEstaAberto(true);
             }}
@@ -72,8 +79,10 @@ const PerfilCardList = ({ idRestaurante }: CardListprops) => {
               <div>
                 <h2>{cardSelecionado.title}</h2>
                 <p>{cardSelecionado.description}</p>
-                <span>serve ate</span>
-                <Button tipo="perfil">Adiconar ao Carrinho</Button>
+                <span>Serve: de {cardSelecionado.porcao}</span>
+                <Button tipo="perfil">
+                  Adiconar ao Carrinho - {formatarPreco(cardSelecionado.preco)}
+                </Button>
               </div>
             </S.ModalContent>
           </S.ModalContainer>
