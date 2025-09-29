@@ -32,7 +32,7 @@ const PerfilCardList = ({ idRestaurante }: CardListprops) => {
     return desc;
   };
 
-  function formatarPreco(valor) {
+  function formatarPreco(valor: number) {
     return valor.toLocaleString("pt-BR", {
       style: "currency",
       currency: "BRL",
@@ -81,7 +81,7 @@ const PerfilCardList = ({ idRestaurante }: CardListprops) => {
                 <p>{cardSelecionado.description}</p>
                 <span>Serve: de {cardSelecionado.porcao}</span>
                 <Button tipo="perfil">
-                  Adiconar ao Carrinho - {formatarPreco(cardSelecionado.preco)}
+                  Adiconar ao Carrinho - {formatarPreco(cardSelecionado.preco as number)}
                 </Button>
               </div>
             </S.ModalContent>
