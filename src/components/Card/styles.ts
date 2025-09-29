@@ -3,7 +3,7 @@ import { Cores } from "../../styles/reset";
 
 export const Card = styled.div`
   width: 480px;
-  height: 420px;
+  height: auto;
   font-family: "Roboto", sans-serif;
   color: ${Cores.vermelho};
   background-color: ${Cores.branco};
@@ -16,8 +16,11 @@ export const CardContainer = styled.div`
 export const CardBannerImg = styled.div`
   position: relative;
 
-  img {
+  > img {
+    max-width: 480px;
+    max-height: 320px;
     width: 100%;
+    height: 100%;
   }
 `;
 

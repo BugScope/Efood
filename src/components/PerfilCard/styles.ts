@@ -19,7 +19,8 @@ export const CardBannerImg = styled.div`
 
   img {
     margin-top: 8px;
-    width: 95%;
+    width: 305px;
+    height: 210px;
   }
 `;
 

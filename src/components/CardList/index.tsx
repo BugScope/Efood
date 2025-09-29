@@ -1,54 +1,59 @@
 import Card from "../../components/Card";
-import rest1 from "../../assets/Images/restaurante1.png";
-import rest2 from "../../assets/Images/restaurante2.png";
+
 import * as S from "./styles";
+import { useEffect, useState } from "react";
+
+export type RstaurantesModal = {
+  id: number;
+  titulo: string;
+  destacado: boolean;
+  tipo: string;
+  avaliacao: number;
+  descricao: string;
+  capa: string;
+  cardapio: {
+    id: number;
+    foto: string;
+    preco: number;
+    nome: string;
+    descricao: string;
+    porcao: string;
+  };
+};
 
 const CardList = () => {
+  const [restaurantes, setRestaurantes] = useState<RstaurantesModal[]>([]);
+
+  useEffect(() => {
+    fetch("https://ebac-fake-api.vercel.app/api/efood/restaurantes")
+      .then((res) => res.json())
+      .then((data) => {
+        setRestaurantes(data);
+      });
+  });
+
+  const getDescricao = (desc: string) => {
+    if (desc.length > 95) {
+      return desc.slice(0, 200) + `...`;
+    }
+    return desc;
+  };
+
   return (
     <S.CardListContainer>
-      <Card
-        destaque={true}
-        tagDescription="Japonesa"
-        description="Peça já o melhor da culinária japonesa no conforto da sua casa! Sushis frescos, sashimis deliciosos e pratos quentes irresistíveis. Entrega rápida, embalagens cuidadosas e qualidade garantida. Experimente o Japão sem sair do lar com nosso delivery!"
-        img={rest1}
-        rating={4.9}
-        title="Hioki Sushi "
-      />
-      <Card
-        tagDescription="Italiana"
-        description="A La Dolce Vita Trattoria leva a autêntica cozinha italiana até você! Desfrute de massas caseiras, pizzas deliciosas e risotos incríveis, tudo no conforto do seu lar. Entrega rápida, pratos bem embalados e sabor inesquecível. Peça já!"
-        img={rest2}
-        rating={4.6}
-        title="La Dolce Vita Trattoria"
-      />
-      <Card
-        tagDescription="Italiana"
-        description="A La Dolce Vita Trattoria leva a autêntica cozinha italiana até você! Desfrute de massas caseiras, pizzas deliciosas e risotos incríveis, tudo no conforto do seu lar. Entrega rápida, pratos bem embalados e sabor inesquecível. Peça já!"
-        img={rest2}
-        rating={4.6}
-        title="La Dolce Vita Trattoria"
-      />
-      <Card
-        tagDescription="Italiana"
-        description="A La Dolce Vita Trattoria leva a autêntica cozinha italiana até você! Desfrute de massas caseiras, pizzas deliciosas e risotos incríveis, tudo no conforto do seu lar. Entrega rápida, pratos bem embalados e sabor inesquecível. Peça já!"
-        img={rest2}
-        rating={4.6}
-        title="La Dolce Vita Trattoria"
-      />
-      <Card
-        tagDescription="Italiana"
-        description="A La Dolce Vita Trattoria leva a autêntica cozinha italiana até você! Desfrute de massas caseiras, pizzas deliciosas e risotos incríveis, tudo no conforto do seu lar. Entrega rápida, pratos bem embalados e sabor inesquecível. Peça já!"
-        img={rest2}
-        rating={4.6}
-        title="La Dolce Vita Trattoria"
-      />
-      <Card
-        tagDescription="Italiana"
-        description="A La Dolce Vita Trattoria leva a autêntica cozinha italiana até você! Desfrute de massas caseiras, pizzas deliciosas e risotos incríveis, tudo no conforto do seu lar. Entrega rápida, pratos bem embalados e sabor inesquecível. Peça já!"
-        img={rest2}
-        rating={4.6}
-        title="La Dolce Vita Trattoria"
-      />
+      {restaurantes.map((rest) => (
+        <Card
+          key={rest.id}
+          description={getDescricao(rest.descricao)}
+          img={rest.capa}
+          rating={rest.avaliacao}
+          tagDescription={rest.tipo}
+          title={rest.titulo}
+          destaque={rest.destacado}
+          cardapio={rest.cardapio}
+          id={rest.id}
+        />
+      ))}
     </S.CardListContainer>
   );
 };

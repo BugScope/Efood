@@ -3,20 +3,31 @@ import estrela from "../../assets/Images/estrela.svg";
 import Button from "../Button";
 import Tag from "../Tag";
 
+export type CardapioModal = {
+  id: number;
+  foto: string;
+  preco: number;
+  nome: string;
+  descricao: string;
+  porcao: string;
+};
+
 type CardProps = {
+  id: number;
   img: string;
   title: string;
   rating: number;
   description: string;
   tagDescription: string;
   destaque?: boolean;
+  cardapio: CardapioModal;
 };
 
-const Card = ({ description, img, rating, title, tagDescription, destaque }: CardProps) => {
+const Card = ({ description, img, rating, title, tagDescription, destaque, id }: CardProps) => {
   return (
     <S.Card>
       <S.CardBannerImg>
-        <img src={img} alt="" />
+        <img src={img} alt={img} />
         <S.CardBannerInfo>
           {destaque ? (
             <>
@@ -43,7 +54,7 @@ const Card = ({ description, img, rating, title, tagDescription, destaque }: Car
           </S.CardInfoHeader>
           <p>{description}</p>
         </S.CardInfo>
-        <Button>Saiba mais</Button>
+        <Button to={`/restaurantes/${id}`}>Saiba mais</Button>
       </S.CardContainer>
     </S.Card>
   );

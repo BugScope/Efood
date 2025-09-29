@@ -4,12 +4,13 @@ import * as S from "./styles";
 type ButtonProps = {
   children: React.ReactNode;
   tipo?: "menu" | "perfil";
+  to?: string;
 };
 
-const Button = ({ children, tipo }: ButtonProps) => {
+const Button = ({ children, tipo, to }: ButtonProps) => {
   return (
     <S.Buttons tipoCSS={tipo}>
-      <Link to={"/perfil"}>{children}</Link>
+      <Link to={to as string}>{children}</Link>
     </S.Buttons>
   );
 };

@@ -1,54 +1,85 @@
-import PerfilCard from "../PerfilCard";
-import pizza from "../../assets/Images/pizza.png";
+import PerfilCard, { type CardProps } from "../PerfilCard";
 import * as S from "./styles";
+import { useEffect, useState } from "react";
+import type { CardapioModal } from "../Card";
+import type { RstaurantesModal } from "../CardList";
+import fechar from "../../assets/Images/fechar.svg";
+import Button from "../Button";
 
-const PerfilCardList = () => {
+type CardListprops = {
+  idRestaurante: string;
+};
+
+const PerfilCardList = ({ idRestaurante }: CardListprops) => {
+  const [cardapio, SetCardapio] = useState<CardapioModal[]>([]);
+  const [restaurante, SetRestaurante] = useState<RstaurantesModal>();
+  const [cardSelecionado, setCardSelecionado] = useState<CardProps | null>(null);
+  const [estaAberto, setEstaAberto] = useState(false);
+
+  useEffect(() => {
+    fetch(`https://ebac-fake-api.vercel.app/api/efood/restaurantes/${idRestaurante}`)
+      .then((res) => res.json())
+      .then((res) => {
+        SetCardapio(res.cardapio);
+        SetRestaurante(res);
+      });
+  }, [idRestaurante]);
+
+  const getDescricao = (desc: string) => {
+    if (desc.length > 95) {
+      return desc.slice(0, 70) + `...`;
+    }
+    return desc;
+  };
+
+  console.log(estaAberto);
+
   return (
     <div>
-      <S.PerfilCardListImg>
+      <S.PerfilCardListImg capaCss={restaurante?.capa as string}>
         <div>
-          <p className="pequeno">Italiana</p>
-          <p className="grande">La Dolce Vita Trattoria</p>
+          <p className="pequeno">{restaurante?.tipo}</p>
+          <p className="grande">{restaurante?.titulo}</p>
         </div>
       </S.PerfilCardListImg>
       <S.PerfilCardListContainer>
-        <PerfilCard
-          description="A clássica Marguerita: molho de tomate suculento, mussarela derretida, manjericão fresco
-            e um toque de azeite. Sabor e simplicidade!"
-          title="Pizza Marguerita"
-          img={pizza}
-        />
-        <PerfilCard
-          description="A clássica Marguerita: molho de tomate suculento, mussarela derretida, manjericão fresco
-            e um toque de azeite. Sabor e simplicidade!"
-          title="Pizza Marguerita"
-          img={pizza}
-        />
-        <PerfilCard
-          description="A clássica Marguerita: molho de tomate suculento, mussarela derretida, manjericão fresco
-            e um toque de azeite. Sabor e simplicidade!"
-          title="Pizza Marguerita"
-          img={pizza}
-        />
-        <PerfilCard
-          description="A clássica Marguerita: molho de tomate suculento, mussarela derretida, manjericão fresco
-            e um toque de azeite. Sabor e simplicidade!"
-          title="Pizza Marguerita"
-          img={pizza}
-        />
-        <PerfilCard
-          description="A clássica Marguerita: molho de tomate suculento, mussarela derretida, manjericão fresco
-            e um toque de azeite. Sabor e simplicidade!"
-          title="Pizza Marguerita"
-          img={pizza}
-        />
-        <PerfilCard
-          description="A clássica Marguerita: molho de tomate suculento, mussarela derretida, manjericão fresco
-            e um toque de azeite. Sabor e simplicidade!"
-          title="Pizza Marguerita"
-          img={pizza}
-        />
+        {cardapio.map((car) => (
+          <PerfilCard
+            key={car.id}
+            description={getDescricao(car.descricao)}
+            title={car.nome}
+            img={car.foto}
+            onSelecionar={() => {
+              setCardSelecionado({
+                title: car.nome,
+                description: car.descricao,
+                img: car.foto,
+              });
+              setEstaAberto(true);
+            }}
+          />
+        ))}
       </S.PerfilCardListContainer>
+
+      {estaAberto && cardSelecionado && (
+        <S.Modal className="visible">
+          <S.ModalContainer>
+            <S.ModalClose>
+              <img src={fechar} alt="" onClick={() => setEstaAberto(false)} />
+            </S.ModalClose>
+            <S.ModalContent>
+              <img src={cardSelecionado.img} alt="" />
+              <div>
+                <h2>{cardSelecionado.title}</h2>
+                <p>{cardSelecionado.description}</p>
+                <span>serve ate</span>
+                <Button tipo="perfil">Adiconar ao Carrinho</Button>
+              </div>
+            </S.ModalContent>
+          </S.ModalContainer>
+          <div className="overlay" onClick={() => setEstaAberto(false)}></div>
+        </S.Modal>
+      )}
     </div>
   );
 };
