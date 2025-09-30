@@ -1,7 +1,7 @@
 import Card from "../../components/Card";
 
 import * as S from "./styles";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export type RstaurantesModal = {
   id: number;
@@ -24,13 +24,18 @@ export type RstaurantesModal = {
 const CardList = () => {
   const [restaurantes, setRestaurantes] = useState<RstaurantesModal[]>([]);
 
+  const fetched = useRef(false);
+
   useEffect(() => {
+    if (fetched.current) return;
+    fetched.current = true;
+
     fetch("https://ebac-fake-api.vercel.app/api/efood/restaurantes")
       .then((res) => res.json())
       .then((data) => {
         setRestaurantes(data);
       });
-  });
+  }, []);
 
   const getDescricao = (desc: string) => {
     if (desc.length > 95) {
