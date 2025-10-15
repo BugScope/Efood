@@ -1,6 +1,5 @@
 import Button from "../Button";
 import * as S from "./styles";
-import lixeira from "../../assets/Images/lixeira.svg";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootReducer } from "../../store";
 import { close, remove } from "../../store/reducers/cart";
@@ -23,7 +22,7 @@ const Cart = () => {
     dispatch(remove(title));
   };
 
-  function formatarPreco(valor) {
+  function formatarPreco(valor: number) {
     return valor.toLocaleString("pt-BR", {
       style: "currency",
       currency: "BRL",
@@ -43,7 +42,7 @@ const Cart = () => {
                   <img src={item.img} alt={item.title} />
                   <div>
                     <p className="grande">{item.title}</p>
-                    <p className="pequeno">{formatarPreco(item.preco)}</p>
+                    <p className="pequeno">{formatarPreco(item.preco as number)}</p>
                   </div>
                   <S.CartButton onClick={() => removeItem(item.title!)}></S.CartButton>
                 </S.CartItem>
