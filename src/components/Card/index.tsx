@@ -3,15 +3,6 @@ import estrela from "../../assets/Images/estrela.svg";
 import Button from "../Button";
 import Tag from "../Tag";
 
-export type CardapioModal = {
-  id: number;
-  foto: string;
-  preco: number;
-  nome: string;
-  descricao: string;
-  porcao: string;
-};
-
 type CardProps = {
   id: number;
   img: string;
@@ -20,7 +11,6 @@ type CardProps = {
   description: string;
   tagDescription: string;
   destaque?: boolean;
-  cardapio: CardapioModal;
 };
 
 const Card = ({ description, img, rating, title, tagDescription, destaque, id }: CardProps) => {

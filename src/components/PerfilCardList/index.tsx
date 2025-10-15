@@ -1,29 +1,27 @@
 import PerfilCard, { type CardProps } from "../PerfilCard";
 import * as S from "./styles";
-import { useEffect, useState } from "react";
-import type { CardapioModal } from "../Card";
-import type { RstaurantesModal } from "../CardList";
+import { useGetRestauranteByIdQuery } from "../../services/api";
+import { useState } from "react";
 import fechar from "../../assets/Images/fechar.svg";
-import Button from "../Button";
+import { useDispatch } from "react-redux";
+import { add } from "../../store/reducers/cart";
 
 type CardListprops = {
   idRestaurante: string;
 };
 
 const PerfilCardList = ({ idRestaurante }: CardListprops) => {
-  const [cardapio, SetCardapio] = useState<CardapioModal[]>([]);
-  const [restaurante, SetRestaurante] = useState<RstaurantesModal>();
+  const { data: restaurante } = useGetRestauranteByIdQuery(idRestaurante);
+
   const [cardSelecionado, setCardSelecionado] = useState<CardProps | null>(null);
+
   const [estaAberto, setEstaAberto] = useState(false);
 
-  useEffect(() => {
-    fetch(`https://ebac-fake-api.vercel.app/api/efood/restaurantes/${idRestaurante}`)
-      .then((res) => res.json())
-      .then((res) => {
-        SetCardapio(res.cardapio);
-        SetRestaurante(res);
-      });
-  }, [idRestaurante]);
+  const dispatch = useDispatch();
+
+  const addToCart = () => {
+    dispatch(add(cardSelecionado!));
+  };
 
   const getDescricao = (desc: string) => {
     if (desc.length > 95) {
@@ -39,16 +37,20 @@ const PerfilCardList = ({ idRestaurante }: CardListprops) => {
     });
   }
 
+  if (!restaurante) {
+    return <div>Carregando...</div>;
+  }
+
   return (
     <div>
-      <S.PerfilCardListImg capaCss={restaurante?.capa as string}>
+      <S.PerfilCardListImg capaCss={restaurante?.capa}>
         <div>
           <p className="pequeno">{restaurante?.tipo}</p>
           <p className="grande">{restaurante?.titulo}</p>
         </div>
       </S.PerfilCardListImg>
       <S.PerfilCardListContainer>
-        {cardapio.map((car) => (
+        {restaurante.cardapio.map((car) => (
           <PerfilCard
             key={car.id}
             description={getDescricao(car.descricao)}
@@ -80,9 +82,9 @@ const PerfilCardList = ({ idRestaurante }: CardListprops) => {
                 <h2>{cardSelecionado.title}</h2>
                 <p>{cardSelecionado.description}</p>
                 <span>Serve: de {cardSelecionado.porcao}</span>
-                <Button tipo="perfil">
+                <S.ModalButton onClick={addToCart}>
                   Adiconar ao Carrinho - {formatarPreco(cardSelecionado.preco as number)}
-                </Button>
+                </S.ModalButton>
               </div>
             </S.ModalContent>
           </S.ModalContainer>

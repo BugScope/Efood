@@ -5,7 +5,7 @@ type ButtonPropsCSS = {
   tipoCSS?: "menu" | "perfil";
 };
 
-export const Buttons = styled.a<ButtonPropsCSS>`
+export const Buttons = styled.button<ButtonPropsCSS>`
   display: block;
   font-weight: 700;
   text-align: center;

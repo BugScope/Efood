@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { Cores } from "../../styles/reset";
-import { Buttons } from "../Button/styles";
 
 type PerfilCardCssProps = {
   capaCss: string;
@@ -107,10 +106,16 @@ export const ModalContent = styled.div`
     padding: 16px 0;
     display: block;
   }
+`;
 
-  ${Buttons} {
-    max-width: 220px;
-    width: 100%;
-    padding: 0;
-  }
+export const ModalButton = styled.button`
+  max-width: 220px;
+  width: 100%;
+  padding: 4px;
+  font-size: 14px;
+  font-weight: 700;
+  background-color: ${Cores.bege};
+  color: ${Cores.vermelho};
+  border: none;
+  cursor: pointer;
 `;

@@ -1,7 +1,15 @@
 import Card from "../../components/Card";
-
+import { useGetRestaurantesQuery } from "../../services/api";
 import * as S from "./styles";
-import { useEffect, useRef, useState } from "react";
+
+export type ItemCardapio = {
+  id: number;
+  foto: string;
+  preco: number;
+  nome: string;
+  descricao: string;
+  porcao: string;
+};
 
 export type RstaurantesModal = {
   id: number;
@@ -11,31 +19,11 @@ export type RstaurantesModal = {
   avaliacao: number;
   descricao: string;
   capa: string;
-  cardapio: {
-    id: number;
-    foto: string;
-    preco: number;
-    nome: string;
-    descricao: string;
-    porcao: string;
-  };
+  cardapio: ItemCardapio[];
 };
 
 const CardList = () => {
-  const [restaurantes, setRestaurantes] = useState<RstaurantesModal[]>([]);
-
-  const fetched = useRef(false);
-
-  useEffect(() => {
-    if (fetched.current) return;
-    fetched.current = true;
-
-    fetch("https://ebac-fake-api.vercel.app/api/efood/restaurantes")
-      .then((res) => res.json())
-      .then((data) => {
-        setRestaurantes(data);
-      });
-  }, []);
+  const { data: restaurantes } = useGetRestaurantesQuery();
 
   const getDescricao = (desc: string) => {
     if (desc.length > 95) {
@@ -43,6 +31,10 @@ const CardList = () => {
     }
     return desc;
   };
+
+  if (!restaurantes) {
+    return <div>Carregando...</div>;
+  }
 
   return (
     <S.CardListContainer>
@@ -55,7 +47,6 @@ const CardList = () => {
           tagDescription={rest.tipo}
           title={rest.titulo}
           destaque={rest.destacado}
-          cardapio={rest.cardapio}
           id={rest.id}
         />
       ))}

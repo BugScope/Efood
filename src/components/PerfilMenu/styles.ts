@@ -18,9 +18,16 @@ export const HeaderItens = styled.div`
   max-width: 1200px;
   margin: 0 auto;
 
-  a,
-  p {
+  a {
     color: ${Cores.vermelho};
     font-weight: 700;
   }
+`;
+
+export const CartButton = styled.button`
+  color: ${Cores.vermelho};
+  font-weight: 700;
+  border: none;
+  background: none;
+  cursor: pointer;
 `;
